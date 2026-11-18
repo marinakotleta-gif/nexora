@@ -1,18 +1,74 @@
 <!doctype html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#dcebdc"><title>NEXUS — Зачарованный лес</title><script src="https://telegram.org/js/telegram-web-app.js"></script><link rel="stylesheet" href="styles.css"></head>
-<body><div class="app">
-<header><div><div class="eyebrow">ЗАЧАРОВАННЫЙ ЛЕС</div><h1>NEXUS</h1></div><div class="wallet"><span>✦</span><b id="dust">0</b><small>пыли</small></div></header>
-<nav><button class="active" data-tab="home">Поляна</button><button data-tab="pets">Питомцы</button><button data-tab="quests">Задания</button><button data-tab="profile">Профиль</button></nav>
-<main>
-<section id="home" class="screen active">
-<div class="hero"><div class="sun"></div><div class="forest-label">ТВОЙ МАЛЕНЬКИЙ МИР</div><h2>Здесь начинается<br>волшебство</h2><p>Собирай звёздную пыль и помогай лесу расцветать.</p>
-<div class="pet-stage"><div class="glow"></div><div id="heroPet" class="pet-art moti"><span class="pet-face">◡</span><i class="ear left"></i><i class="ear right"></i><i class="cheek l"></i><i class="cheek r"></i></div><div class="pet-name">МОТИ <span id="petLevel">Ур. 1</span></div><div class="pet-caption">Твой верный лесной спутник</div></div>
-<button class="collect" id="tapBtn">✦ Собрать звёздную пыль</button>
-<div class="stats"><div><small>За нажатие</small><b id="tapPower">+1</b></div><div><small>Автодобыча</small><b id="autoRate">0/сек</b></div><div><small>Уровень</small><b id="level">1</b></div></div></div>
-<div class="upgrade-card"><div><span class="mini-icon">🍄</span><div><b>Улучшить поляну</b><small>Питомец будет добывать быстрее</small></div></div><button id="upgradeBtn">Улучшить · <span id="upgradeCost">25</span> ✦</button></div>
-<div class="section-head"><h3>Твои спутники</h3><button data-goto="pets">Все →</button></div><div class="mini-pets" id="homePets"></div>
-</section>
-<section id="pets" class="screen"><div class="page-title"><span class="eyebrow">ТВОЯ КОЛЛЕКЦИЯ</span><h2>Лесные друзья</h2><p>Каждый питомец приносит в лес что-то своё.</p></div><div class="collection-summary"><b id="collectionCount">1 / 6</b><span>открыто питомцев</span><div class="progress"><i id="collectionProgress"></i></div></div><div class="pet-grid" id="petGrid"></div><div class="detail-card" id="petDetail"><div class="detail-art" id="detailArt">🦊</div><div class="detail-info"><span class="rarity">ОБЫЧНЫЙ</span><h3>Моти</h3><p>Любопытный хранитель молодой поляны.</p><div class="attributes"><span>✦ Сила клика <b>+1</b></span><span>◷ Автодобыча <b>1/сек</b></span></div><button id="evolveBtn">Эволюция · <span id="evolveCost">100</span> ✦</button></div></div></section>
-<section id="quests" class="screen"><div class="page-title"><span class="eyebrow">МАЛЕНЬКИЕ ЦЕЛИ</span><h2>Задания леса</h2><p>Добрые дела приносят награды.</p></div><div id="questList" class="quest-list"></div></section>
-<section id="profile" class="screen"><div class="page-title"><span class="eyebrow">ТВОЯ ИСТОРИЯ</span><h2>Профиль игрока</h2></div><div class="profile-card"><div class="avatar">🌿</div><h3>Лесной исследователь</h3><span>Уровень <b id="profileLevel">1</b></span></div><div class="profile-stats"><div><small>Всего собрано</small><b id="totalDust">0</b></div><div><small>Нажатий</small><b id="totalTaps">0</b></div><div><small>Питомцев</small><b id="profilePets">1</b></div></div><p class="note">Прогресс этой демонстрационной версии хранится на устройстве. Для общего рейтинга и синхронизации между устройствами понадобится сервер.</p></section>
-</main><footer>Маленький мир больших чудес <span>✧</span></footer></div><script src="app.js"></script></body></html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#dcebdc">
+  <title>NEXUS — Зачарованный лес</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div><div class="eyebrow">ЗАЧАРОВАННЫЙ ЛЕС</div><h1>NEXUS</h1></div>
+    <div class="wallet"><span>✦</span><b id="dust">0</b><small>пыли</small></div>
+  </header>
+
+  <nav>
+    <button class="active" data-tab="home">Поляна</button>
+    <button data-tab="pets">Питомцы</button>
+    <button data-tab="quests">Задания</button>
+    <button data-tab="profile">Профиль</button>
+  </nav>
+
+  <main>
+    <section id="home" class="screen active">
+      <div class="hero">
+        <div class="sun"></div><div class="forest-label">ТВОЙ МАЛЕНЬКИЙ МИР</div>
+        <h2>Здесь начинается<br>волшебство</h2>
+        <p>Собирай звездную пыль и находи лесных друзей.</p>
+      </div>
+
+      <div class="pet-stage">
+        <div class="glow"></div>
+        <div id="heroPet" class="pet-art moti"><span class="pet-face">◡</span></div>
+      </div>
+
+      <button class="collect" id="tapBtn">✦ Собрать пыль</button>
+      <div class="stats">
+        <div><small>За нажатие</small><b id="tapPower">+1</b></div>
+        <div><small>Автодобыча</small><b id="autoRate">0/сек</b></div>
+        <div><small>Уровень</small><b id="level">1</b></div>
+      </div>
+
+      <div class="upgrade-card">
+        <div><span class="mini-icon">🍄</span><div><b>Улучшить поляну</b><small>Больше пыли за каждое касание</small></div></div>
+        <button id="upgradeBtn"><b id="upgradeCost">25</b> ✦</button>
+      </div>
+
+      <div class="section-head"><h3>Твои спутники</h3><button data-goto="pets">Все →</button></div>
+      <div class="mini-pets" id="homePets"></div>
+    </section>
+
+    <section id="pets" class="screen">
+      <div class="page-title"><span class="eyebrow">ТВОЯ КОЛЛЕКЦИЯ</span><h2>Лесные друзья</h2><p>Питомцы увеличивают автодобычу.</p></div>
+      <div class="pet-grid" id="petGrid"></div>
+    </section>
+
+    <section id="quests" class="screen">
+      <div class="page-title"><span class="eyebrow">МАЛЕНЬКИЕ ЦЕЛИ</span><h2>Задания леса</h2></div>
+      <div class="quest-list" id="questList"></div>
+    </section>
+
+    <section id="profile" class="screen">
+      <div class="page-title"><span class="eyebrow">ТВОЯ ИСТОРИЯ</span><h2>Профиль</h2></div>
+      <div class="profile-card"><div class="avatar" id="avatar">✦</div><div><b id="playerName">Исследователь</b><small id="playerStats">Уровень 1</small></div></div>
+      <button class="reset-btn" id="resetBtn">Сбросить прогресс</button>
+    </section>
+  </main>
+  <footer>Маленький мир больших чудес <span>✧</span></footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
